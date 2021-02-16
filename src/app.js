@@ -25,11 +25,13 @@ app.use(myConnection(mysql, {
     database: 'crudnodejsmysql'
 }, 'single'));
 
-
 // routes
 app.use('/', customerRoutes);
 
+// static files
+app.use(express.static, path.join(__dirname, 'public'));
 
+// server listening
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });
