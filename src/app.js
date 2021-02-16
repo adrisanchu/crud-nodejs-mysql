@@ -6,6 +6,9 @@ const myConnection = require('express-myconnection');
 
 const app = express();
 
+// import routes
+const customerRoutes = require('./routes/customer');
+
 // settings
 app.set('port', process.env.PORT || 3000);  // to change when we move to REE server
 // set ejs as html template
@@ -24,6 +27,8 @@ app.use(myConnection(mysql, {
 
 
 // routes
+app.use('/', customerRoutes);
+
 
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
