@@ -15,12 +15,13 @@ app.set('views', path.join(__dirname, 'views'));
 // middlewares
 app.use(morgan('dev'));  // (executes before user requests)
 app.use(myConnection(mysql, {
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
+    host: 'rewkcmdppelmo3',
+    user: 'nodeuser',
+    password: 'Plan.2020',
     port: 3306,
     database: 'crudnodejsmysql'
 }, 'single'));
+
 
 // routes
 
