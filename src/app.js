@@ -1,18 +1,26 @@
 const path = require('path');
 const express = require('express');
-const app = express();
 const morgan = require('morgan');
+const mysql = require('mysql');
+const myConnection = require('express-myconnection');
+
+const app = express();
 
 // settings
-// to change when we move to REE server
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3000);  // to change when we move to REE server
 // set ejs as html template
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // middlewares
-// (executes before user requests)
-app.use(morgan('dev'));
+app.use(morgan('dev'));  // (executes before user requests)
+app.use(myConnection(mysql, {
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    port: 3306,
+    database: 'crudnodejsmysql'
+}, 'single'));
 
 // routes
 
