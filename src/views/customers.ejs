@@ -6,7 +6,32 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-7">
-            <!-- List of customers -->
+            <!-- List of all customers in our db -->
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <th>num</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <!-- loop through data[] object -->
+                    <!-- it is named 'data' because, in customerController, 
+                        the method 'res.render' says data:customers ... -->
+                    <% if(data) { %>
+                        <% for (let i=0; i<data.length; i++) { %>
+                            <tr>
+                                <!-- we put '=' to tell ejs to render the value on screen -->
+                                <td><%= data[i].id %></td>
+                                <td><%= data[i].name %> </td>
+                                <td><%= data[i].address %> </td>
+                                <td><%= data[i].phone %> </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
         <div class="col-md-5">
             <div class="card">
