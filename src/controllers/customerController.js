@@ -7,8 +7,7 @@ controller.list = (req, res) => {
             if (err) {
                 res.json(err);
             }
-            console.log('customers');
-            console.log(customers);
+            // console.log(customers);
             res.render('customers', {
                 data: customers
             });
@@ -24,6 +23,15 @@ controller.save = (req, res) => {
         });
     });
 };
-// controller.delete
+
+controller.delete = (req, res) => {
+    // get id from router through params
+    const { id } = req.params;  // query destructuring: same as 'req.params.id'
+    req.getConnection((err, conn) => {
+        conn.query('DELETE FROM customer WHERE id = ?', [id], (err, rows) => {
+            res.redirect('/');
+        });
+    });
+};
 
 module.exports = controller;

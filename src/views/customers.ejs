@@ -9,7 +9,7 @@
             <!-- List of all customers in our db -->
             <table class="table table-bordered table-hover">
                 <thead>
-                    <th>num</th>
+                    <th>Id</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Phone</th>
@@ -27,6 +27,9 @@
                                 <td><%= data[i].name %> </td>
                                 <td><%= data[i].address %> </td>
                                 <td><%= data[i].phone %> </td>
+                                <td>
+                                    <a href="/delete/<%= data[i].id %>" class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                         <% } %>
                     <% } %>
