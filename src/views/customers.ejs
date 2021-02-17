@@ -1,18 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD NodeJS MySQL</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
-    <!-- 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    -->
-</head>
-<body>
-    <nav class="navbar navbar-dark bg-dark">
-        <a href="/" class="navbar-brand">NodeJS MySQL</a>
-    </nav>
-</body>
-</html>
+<!-- append common header -->
+<%- include('partials/_header'); %>
+
+<!-- send data from cli to server -->
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-7">
+            <!-- List of customers -->
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/add" method="post">
+                        <!-- name -->
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="name"     placeholder="Name:" id="">
+                        </div>
+                        <!-- address -->
+                        <div class="form-group">
+                            <input class="form-control" type="text"     name="address" placeholder="Address:" id="">
+                        </div>
+                        <!-- phone -->
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="phone"    placeholder="Phone number:" id="">
+                        </div>
+                        <!-- submit button -->
+                        <button type="submit" class="btn btn-primary">
+                            Save Customer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- append footer -->
+<%- include('partials/_footer'); %>
