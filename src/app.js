@@ -8,6 +8,7 @@ const app = express();
 
 // import routes
 const customerRoutes = require('./routes/customer');
+const { urlencoded } = require('express');
 
 // settings
 app.set('port', process.env.PORT || 3000);  // to change when we move to REE server
@@ -24,7 +25,8 @@ app.use(myConnection(mysql, {
     port: 3306,
     database: 'crudnodejsmysql'
 }, 'single'));
-
+// manage data from form input using express.urlencoded and req.body
+app.use(express.urlencoded({extended: false}));
 // routes
 app.use('/', customerRoutes);
 
