@@ -29,7 +29,7 @@ app.use(myConnection(mysql, {
 app.use('/', customerRoutes);
 
 // static files
-app.use(express.static, path.join(__dirname, 'public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // server listening
 app.listen(3000, () => {
