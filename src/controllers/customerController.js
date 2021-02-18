@@ -24,6 +24,27 @@ controller.save = (req, res) => {
     });
 };
 
+controller.edit = (req, res) => {
+    const { id } = req.params;
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM customer WHERE id = ?', [id], (err, customer) => {
+            res.render('customer_edit', {
+                data: customer[0]
+            });
+        });
+    });
+};
+
+controller.update = (req, res) => {
+    const { id } = req.params;
+    const data = req.body;
+    req.getConnection((err, conn) => {
+        conn.query('UPDATE customer set ? WHERE id = ?', [data, id], (err, rows) => {
+            res.redirect('/');
+        });
+    });
+};
+
 controller.delete = (req, res) => {
     // get id from router through params
     const { id } = req.params;  // query destructuring: same as 'req.params.id'
