@@ -1,0 +1,35 @@
+<!-- append common header -->
+<%- include('partials/_header'); %>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <!-- pass data[] for an specific customer -->
+                    <form action="/update/<%= data.id %>" method="post">
+                        <!-- name -->
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="name" value="<%= data.name %>" placeholder="Name:" id="">
+                        </div>
+                        <!-- address -->
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="address" value="<%= data.address %>" placeholder="Address:" id="">
+                        </div>
+                        <!-- phone -->
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="phone" value="<%= data.phone %>" placeholder="Phone number:" id="">
+                        </div>
+                        <!-- submit button -->
+                        <button type="submit" class="btn btn-primary">
+                            Edit Customer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- append footer -->
+<%- include('partials/_footer'); %>
