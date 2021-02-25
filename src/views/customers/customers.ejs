@@ -1,5 +1,7 @@
 <!-- append common header -->
 <%- include('partials/_header'); %>
+<%- include('partials/_sidebar'); %>
+<%- include('customers/topbarCustomers'); %>
 
 <!-- send data from cli to server -->
 
@@ -28,8 +30,8 @@
                                 <td><%= data[i].address %> </td>
                                 <td><%= data[i].phone %> </td>
                                 <td>
-                                    <a href="/delete/<%= data[i].id %>" class="btn btn-danger">Delete</a>
-                                    <a href="/update/<%= data[i].id %>" class="btn btn-warning">Update</a>
+                                    <a href="customers/delete/<%= data[i].id %>" class="btn btn-danger">Delete</a>
+                                    <a href="customers/update/<%= data[i].id %>" class="btn btn-warning">Update</a>
                                 </td>
                             </tr>
                         <% } %>
@@ -40,7 +42,7 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-body">
-                    <form action="/add" method="post">
+                    <form action="customers/add" method="post">
                         <!-- name -->
                         <div class="form-group">
                             <input class="form-control" type="text" name="name"     placeholder="Name:" id="">
