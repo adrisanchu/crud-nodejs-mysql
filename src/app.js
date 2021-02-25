@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mysql = require('mysql');
 const myConnection = require('express-myconnection');
+const dbConfig = require('./dbConfig.json');
 
 const app = express();
 
@@ -16,22 +17,20 @@ app.set('port', process.env.PORT || 3000);  // to change when we move to REE ser
 app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views'),
+    path.join(__dirname, 'views/home'),
     path.join(__dirname, 'views/customers')
 ]);
 
 // middlewares
 app.use(morgan('dev'));  // (executes before user requests)
-app.use(myConnection(mysql, {
-    host: 'rewkcmdppelmo3',
-    user: 'nodeuser',
-    password: 'Plan.2020',
-    port: 3306,
-    database: 'crudnodejsmysql'
-}, 'single'));
+app.use(myConnection(mysql, dbConfig, 'single'));
 // manage data from form input using express.urlencoded and req.body
 app.use(express.urlencoded({extended: false}));
 // routes
-// app.use('/', res.send('home'));
+app.get('/', (req, res) => {
+    // console.log('Home!');
+    res.render('home');
+});
 app.use('/customers', customerRoutes);
 
 // static files
