@@ -19,7 +19,8 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1030
+    z-index: 1030;
+    justify-content: flex-start;
 }
 
 @media (min-width:768px) {
