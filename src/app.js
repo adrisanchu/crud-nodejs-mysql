@@ -14,7 +14,10 @@ const { urlencoded } = require('express');
 app.set('port', process.env.PORT || 3000);  // to change when we move to REE server
 // set ejs as html template
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', [
+    path.join(__dirname, 'views'),
+    path.join(__dirname, 'views/customers')
+]);
 
 // middlewares
 app.use(morgan('dev'));  // (executes before user requests)
@@ -28,7 +31,8 @@ app.use(myConnection(mysql, {
 // manage data from form input using express.urlencoded and req.body
 app.use(express.urlencoded({extended: false}));
 // routes
-app.use('/', customerRoutes);
+// app.use('/', res.send('home'));
+app.use('/customers', customerRoutes);
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
