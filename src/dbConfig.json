@@ -1,7 +1,7 @@
 {
     "host": "rewkcmdppelmo3",
+    "port": 3306,
     "user": "nodeuser",
     "password": "Plan.2020",
-    "port": 3306,
     "database": "crudnodejsmysql"
 }

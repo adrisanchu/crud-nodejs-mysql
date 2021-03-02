@@ -1,9 +1,6 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-const mysql = require('mysql');
-const myConnection = require('express-myconnection');
-const dbConfig = require('./dbConfig.json');
 
 const app = express();
 
@@ -23,7 +20,6 @@ app.set('views', [
 
 // middlewares
 app.use(morgan('dev'));  // (executes before user requests)
-app.use(myConnection(mysql, dbConfig, 'single'));
 // manage data from form input using express.urlencoded and req.body
 app.use(express.urlencoded({extended: false}));
 // routes
