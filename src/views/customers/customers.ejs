@@ -3,13 +3,21 @@
 <%- include('partials/_sidebar'); %>
 <%- include('customers/_topbar'); %>
 
-<!-- send data from cli to server -->
-
+<!-- db params -->
+<ul>
+    <li>host:<%= db.host %></li>
+    <li>port:<%= db.port %></li>
+    <li>user: <%= db.user %></li>
+    <li>database: <%= db.database %></li>
+</ul>
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-7">
             <!-- List of all customers in our db -->
             <table class="table table-bordered table-hover">
+                <% if(data.length === 0) { %>
+                    <caption>No data to display. The table is empty.</caption>
+                <% } %>
                 <thead>
                     <th>Id</th>
                     <th>Name</th>
