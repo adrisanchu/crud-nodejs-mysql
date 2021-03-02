@@ -1,0 +1,19 @@
+<!-- append common header -->
+<%- include('partials/_header'); %>
+<%- include('partials/_sidebar'); %>
+<%- include('customers/_topbar'); %>
+
+
+    <h1>ERROR! <%= data.code %></h1>
+    <p>Error log:</p>
+    <ul>
+        <li>errno: <%= data.errno %></li>
+        <li>code: <%= data.code %></li>
+        <li>syscall: <%= data.syscall %></li>
+        <li>hostname: <%= data.hostname %></li>
+        <li>fatal: <%= data.fatal %></li>
+    </ul>
+
+
+<!-- append footer -->
+<%- include('partials/_footer'); %>
