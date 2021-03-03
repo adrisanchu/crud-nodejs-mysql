@@ -1,9 +1,10 @@
 const controller = {};
 const pool = require('../database');
+const schema = "crudnodejsmysql";
 
 // add methods to the controller object
 controller.list = (req, res) => {
-    // console.log(res);
+    // get connection to server first
     pool.getConnection((err, conn) => {
         if(err) {
             // db unavailable, we send an err page !
@@ -12,8 +13,18 @@ controller.list = (req, res) => {
                 data: err
             });
         } else {
-            // success !! Passing db params to view
-            let db = pool.config.connectionConfig;
+            // success !! set default db to use...
+            conn.changeUser({database: schema}, (err) => {
+                if(err) {
+                    console.error('DB NOT FOUND!');
+                    res.render('customers_err', {
+                        data: err
+                    });
+                }
+            });
+            // Passing db params to view
+            let { host, port, user } = pool.config.connectionConfig;
+            // query our db
             conn.query('SELECT * FROM customer', (err, customers) => {
                 if (err) {
                     res.json(err);
@@ -22,55 +33,81 @@ controller.list = (req, res) => {
                 // console.log(customers);
                 res.render('customers', {
                     data: customers,
-                    db: db
+                    host: host,
+                    port: port,
+                    user: user,
+                    database: schema
                 });
             });
+            // release connection!
+            conn.release();
         }
     });
 };
 
-
-/*
-// add methods to the controller object
-controller.list = (req, res) => {
-    req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM customer', (err, customers) => {
-            if (err) {
-                res.json(err);
-            }
-            // console.log(customers);
-            res.render('customers', {
-                data: customers
-            });
-        });
-    });
-};
-*/
 controller.save = (req, res) => {
     const data = req.body;
     pool.getConnection((err, conn) => {
-        conn.query('INSERT INTO customer SET ?', [data], (err, customer) => {
-            if(err){
-                console.log('/customers: INSERT failed');
-                console.err(err);
-            }
-            res.redirect('/customers');
-        });
+        if(err) {
+            // db unavailable, we send an err page !
+            console.error(err);
+            res.render('customers_err', {
+                data: err
+            });
+        } else {
+            // success !! set default db to use...
+            conn.changeUser({database: schema}, (err) => {
+                if(err) {
+                    console.error('DB NOT FOUND!');
+                    res.render('customers_err', {
+                        data: err
+                    });
+                }
+            });
+            conn.query('INSERT INTO customer SET ?', [data], (err, customer) => {
+                if(err){
+                    console.log('/customers: INSERT failed');
+                    console.err(err);
+                }
+                res.redirect('/customers');
+            });
+            // release connection!
+            conn.release();
+        }
     });
 };
 
 controller.edit = (req, res) => {
     const { id } = req.params;
     pool.getConnection((err, conn) => {
-        conn.query('SELECT * FROM customer WHERE id = ?', [id], (err, customer) => {
-            if(err){
-                console.log('/customers: SELECT failed');
-                console.err(err);
-            }
-            res.render('customer_edit', {
-                data: customer[0]
+        if(err) {
+            // db unavailable, we send an err page !
+            console.error(err);
+            res.render('customers_err', {
+                data: err
             });
-        });
+        } else {
+            // success !! set default db to use...
+            conn.changeUser({database: schema}, (err) => {
+                if(err) {
+                    console.error('DB NOT FOUND!');
+                    res.render('customers_err', {
+                        data: err
+                    });
+                }
+            });
+            conn.query('SELECT * FROM customer WHERE id = ?', [id], (err, customer) => {
+                if(err){
+                    console.log('/customers: SELECT failed');
+                    console.err(err);
+                }
+                res.render('customer_edit', {
+                    data: customer[0]
+                });
+            });
+            // release connection!
+            conn.release();
+        }
     });
 };
 
@@ -78,13 +115,32 @@ controller.update = (req, res) => {
     const { id } = req.params;
     const data = req.body;
     pool.getConnection((err, conn) => {
-        if(err){
-            console.log('/customers: UPDATE failed');
-            console.err(err);
+        if(err) {
+            // db unavailable, we send an err page !
+            console.error(err);
+            res.render('customers_err', {
+                data: err
+            });
+        } else {
+            // success !! set default db to use...
+            conn.changeUser({database: schema}, (err) => {
+                if(err) {
+                    console.error('DB NOT FOUND!');
+                    res.render('customers_err', {
+                        data: err
+                    });
+                }
+            });
+            conn.query('UPDATE customer set ? WHERE id = ?', [data, id], (err, rows) => {
+                if(err){
+                    console.log('/customers: UPDATE failed');
+                    console.err(err);
+                }
+                res.redirect('/customers');
+            });
+            // release connection!
+            conn.release();
         }
-        conn.query('UPDATE customer set ? WHERE id = ?', [data, id], (err, rows) => {
-            res.redirect('/customers');
-        });
     });
 };
 
@@ -92,13 +148,32 @@ controller.delete = (req, res) => {
     // get id from router through params
     const { id } = req.params;  // query destructuring: same as 'req.params.id'
     pool.getConnection((err, conn) => {
-        if(err){
-            console.log('/customers: DELETE failed');
-            console.err(err);
+        if(err) {
+            // db unavailable, we send an err page !
+            console.error(err);
+            res.render('customers_err', {
+                data: err
+            });
+        } else {
+            // success !! set default db to use...
+            conn.changeUser({database: schema}, (err) => {
+                if(err) {
+                    console.error('DB NOT FOUND!');
+                    res.render('customers_err', {
+                        data: err
+                    });
+                }
+            });
+            conn.query('DELETE FROM customer WHERE id = ?', [id], (err, rows) => {
+                if(err){
+                    console.log('/customers: DELETE failed');
+                    console.err(err);
+                }
+                res.redirect('/customers');
+            });
+            // release connection!
+            conn.release();
         }
-        conn.query('DELETE FROM customer WHERE id = ?', [id], (err, rows) => {
-            res.redirect('/customers');
-        });
     });
 };
 
