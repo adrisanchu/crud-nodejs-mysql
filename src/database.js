@@ -1,14 +1,13 @@
 const mysql = require('mysql')
 const { host, port, user, password, database } = require('./dbConfig.json');
 
-
+// database not specified, we will be pass it later on the controllers !
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: host,
     port: port,
     user: user,
-    password: password,
-    database: database
+    password: password
 });
 
 // Ping database to check for common exception errors.
